@@ -13,17 +13,14 @@ export default function DinoDogGame() {
   const obstacleRef = useRef(null);
   const navigate = useNavigate();
   
-  // NOUA FUNCȚIE DE RESETARE A JOCULUI
   const resetGame = () => {
     setIsJumping(false);
     setGameOver(false);
     setScore(0);
     setHasReachedGoal(false);
     
-    // Asigură-te că animația obstacolului repornește
     if (obstacleRef.current) {
         obstacleRef.current.style.animationPlayState = 'running';
-        // Dacă nu merge automat, forțează o mică resetare a poziției
         obstacleRef.current.style.right = '-60px'; 
     }
   };
@@ -31,6 +28,10 @@ export default function DinoDogGame() {
   // 1. Logica pentru Sărit și Verificarea Obiectivului
   useEffect(() => {
     const handleKey = (e) => {
+      
+      // FIX NOU: Ignoră evenimentele dacă tasta este ținută apăsată
+      if (e.repeat) return; 
+
       if (e.code === "Space" && !isJumping && !gameOver) { 
         setIsJumping(true);
         
@@ -42,6 +43,7 @@ export default function DinoDogGame() {
             return newScore;
         });
 
+        // Durata fixă a săriturii de 500ms
         setTimeout(() => setIsJumping(false), 500);
       }
     };
@@ -66,14 +68,12 @@ export default function DinoDogGame() {
       if (hit) {
         setGameOver(true);
         
-        // Logica bonusului de fericire
         if (hasReachedGoal) {
              localStorage.setItem("game_result", "win"); 
         } else {
              localStorage.setItem("game_result", "lose"); 
         }
         
-        // Oprește animația obstacolului
         const obstacleElement = obstacleRef.current;
         if (obstacleElement) {
             obstacleElement.style.animationPlayState = 'paused';
@@ -84,7 +84,6 @@ export default function DinoDogGame() {
     return () => clearInterval(checkCollision);
   }, [gameOver, hasReachedGoal]); 
 
-  // Funcție de întoarcere la Pet
   const handleBackToPet = () => {
     navigate("/");
   };
