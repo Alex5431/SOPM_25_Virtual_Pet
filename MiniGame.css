@@ -1,0 +1,60 @@
+.minigame-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.status-bar {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff8dc; /* Culoare deschisă */
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    width: 90%;
+}
+
+.game-area {
+    position: relative;
+    width: 90%;
+    height: 350px; /* Înălțime fixă pentru zona de joc */
+    background: #fff; /* Fundal alb pentru vizibilitate */
+    border: 3px dashed #a0522d;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    overflow: hidden; /* Asigură că Osul nu iese din chenar */
+}
+
+.target {
+    position: absolute;
+    font-size: 3rem; /* Mărimea Osului */
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    user-select: none;
+    z-index: 10;
+}
+
+.target:hover {
+    transform: scale(1.1);
+}
+
+.game-over h3 {
+    color: #ffd700;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.instruction {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #4a4a4a;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
