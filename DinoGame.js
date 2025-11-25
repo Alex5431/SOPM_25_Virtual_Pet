@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+// DinoGame.js (sau DinoDogGame.js)
+import React, { useState, useEffect, useRef } from "react"; 
 import "./DinoGame.css"; 
 import dogHappy from "./images/dog_happy.png";
 import { useNavigate } from "react-router-dom"; 
@@ -9,9 +10,23 @@ export default function DinoDogGame() {
   const [score, setScore] = useState(0);
   const [hasReachedGoal, setHasReachedGoal] = useState(false); 
 
+  // NOU: Starea pentru cel mai bun scor citit din localStorage
+  const [bestScore, setBestScore] = useState(() => {
+    const savedScore = localStorage.getItem('dino_best_score');
+    return savedScore ? parseInt(savedScore, 10) : 0;
+  });
+
   const dogRef = useRef(null);
   const obstacleRef = useRef(null);
   const navigate = useNavigate();
+  
+  // LOGICĂ NOUĂ: DETERMINAREA CLASEI DE VITEZĂ
+  const getSpeedClass = () => {
+    if (score >= 15) return 'speed-4'; 
+    if (score >= 10) return 'speed-3';
+    if (score >= 5) return 'speed-2';
+    return 'speed-1'; 
+  };
   
   const resetGame = () => {
     setIsJumping(false);
@@ -25,11 +40,10 @@ export default function DinoDogGame() {
     }
   };
 
-  // 1. Logica pentru Sărit și Verificarea Obiectivului
+  // 1. Logica pentru Sărit
   useEffect(() => {
     const handleKey = (e) => {
       
-      // FIX NOU: Ignoră evenimentele dacă tasta este ținută apăsată
       if (e.repeat) return; 
 
       if (e.code === "Space" && !isJumping && !gameOver) { 
@@ -43,7 +57,6 @@ export default function DinoDogGame() {
             return newScore;
         });
 
-        // Durata fixă a săriturii de 500ms
         setTimeout(() => setIsJumping(false), 500);
       }
     };
@@ -55,6 +68,7 @@ export default function DinoDogGame() {
   // 2. Logica pentru Coliziune (Game Over)
   useEffect(() => {
     const checkCollision = setInterval(() => {
+      // Necesită actualizarea la fiecare schimbare de scor sau record
       if (!dogRef.current || !obstacleRef.current || gameOver) return;
 
       const dogRect = dogRef.current.getBoundingClientRect();
@@ -67,6 +81,13 @@ export default function DinoDogGame() {
 
       if (hit) {
         setGameOver(true);
+        
+        // --- LOGICA NOUĂ: SALVARE BEST SCORE ---
+        if (score > bestScore) {
+          setBestScore(score);
+          localStorage.setItem('dino_best_score', score.toString());
+        }
+        // ------------------------------------
         
         if (hasReachedGoal) {
              localStorage.setItem("game_result", "win"); 
@@ -82,7 +103,7 @@ export default function DinoDogGame() {
     }, 50);
 
     return () => clearInterval(checkCollision);
-  }, [gameOver, hasReachedGoal]); 
+  }, [gameOver, hasReachedGoal, score, bestScore]); // Adaugă dependențe pentru scor și record
 
   const handleBackToPet = () => {
     navigate("/");
@@ -100,9 +121,18 @@ export default function DinoDogGame() {
             className={`dog ${isJumping ? "jump" : ""}`}
           />
 
-          <div ref={obstacleRef} className="obstacle"></div>
+          {/* Key-ul forțează repornirea animației la schimbarea vitezei */}
+          <div 
+            key={getSpeedClass()} 
+            ref={obstacleRef} 
+            className={`obstacle ${getSpeedClass()}`}
+          ></div>
 
-          <div className="score-box">Sărituri: {score}</div>
+          {/* NOU: Container pentru a afișa ambele scoruri */}
+          <div className="score-container">
+            <div className="score-box">Sărituri: {score}</div>
+            <div className="best-score-box">Record: {bestScore}</div>
+          </div>
           
           {hasReachedGoal && <div className="goal-reached">✅ Obiectiv de bonus atins!</div>} 
         </>
@@ -113,7 +143,13 @@ export default function DinoDogGame() {
           <h1>
             {hasReachedGoal ? "Ai obținut bonusul! 🎉" : "Ai pierdut! 😢"}
           </h1>
-          <p>Ai reușit **{score}** sărituri.</p>
+          
+          {/* NOU: Mesaj special pentru Noul Record */}
+          {score > bestScore ? (
+            <p className="new-record">🎉 NOU RECORD: {score} sărituri! 🎉</p>
+          ) : (
+            <p className="current-record">Recordul tău curent: {bestScore} sărituri</p>
+          )}
           
           <button className="retry" onClick={resetGame}>Joacă din nou</button> 
           
