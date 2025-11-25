@@ -1,0 +1,67 @@
+.dog-game-bg {
+  width: 100%;
+  height: 100vh;
+  background: #d3a874;
+  position: relative;
+  overflow: hidden;
+}
+
+.dog {
+  width: 90px;
+  position: absolute;
+  bottom: 0;
+  left: 60px;
+  transition: transform 0.2s;
+}
+
+.jump {
+  transform: translateY(-130px);
+}
+
+.obstacle {
+  width: 40px;
+  height: 70px;
+  background: #4b2e0f;
+  position: absolute;
+  bottom: 0;
+  right: -60px;
+  animation: move 1.7s linear infinite;
+}
+
+@keyframes move {
+  from { right: -60px; }
+  to { right: 110%; }
+}
+
+.score-box {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.4);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 20px;
+}
+
+.game-over {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+.retry, .back {
+  display: block;
+  margin-top: 20px;
+  background: #000;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  width: 140px;
+  margin-left: auto;
+  margin-right: auto;
+}
