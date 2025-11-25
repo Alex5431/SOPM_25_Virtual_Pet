@@ -1,0 +1,188 @@
+body {
+    font-family: "Poppins", sans-serif;
+    /* Culoarea de fundal maronie din imaginea ta */
+    background-color: #d2b48c; 
+    color: #4a4a4a; 
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Containerul principal al aplicației */
+.app {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrează pe orizontală */
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+    /* Poți folosi margin: auto pentru a o centra și pe verticală, 
+       dar pentru început, centrare pe orizontală e suficient. */
+}
+
+h1 {
+    color: #fff8dc;
+    text-shadow: 2px 2px 4px #000;
+    margin-bottom: 1.5rem;
+}
+
+.pet-image {
+    width: 240px;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+/* Stil pentru meniul de mâncare - Centrat și vizibil */
+.food-menu {
+    background-color: #8b5a2b; /* O nuanță mai închisă pentru fundalul meniului */
+    border: 3px solid #d4af37;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    width: 280px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    /* Se centrează automat datorită flexbox-ului din .app */
+}
+
+.food-menu p {
+    color: #fff8dc;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+}
+
+.food-menu button {
+    display: block;
+    width: 100%;
+    margin: 0.4rem 0;
+    background: #a0522d; /* Maro închis pentru butoane */
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-weight: 500;
+}
+
+.food-menu button:hover {
+    background: #8b4513;
+    transform: scale(1.02);
+}
+
+/* Stiluri pentru Statistici */
+.stats {
+    width: 90%;
+    max-width: 350px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.stats > div {
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+.stats p {
+    font-weight: bold;
+    color: #4a4a4a;
+    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+}
+
+/* Stiluri pentru Progress Bar-uri (elementul nativ <progress>) */
+progress {
+    width: 100%;
+    height: 12px;
+    border-radius: 10px;
+    /* Resetează stilul implicit al browser-ului */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+/* Stil pentru partea "goal" (fundalul barei) */
+progress::-webkit-progress-bar {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+/* Stil pentru partea "value" (progresul) */
+progress::-webkit-progress-value {
+    background-color: #9370db; /* O nuanță de mov pentru a se potrivi cu imaginea ta */
+    border-radius: 10px;
+}
+
+progress::-moz-progress-bar {
+    background-color: #9370db;
+    border-radius: 10px;
+}
+
+/* Stiluri pentru butoanele de acțiune (Feed, Clean, Play) */
+.buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 1rem;
+}
+
+.buttons button {
+    background: #ffd700; 
+    color: #4a4a4a; 
+    border: none;
+    font-weight: bold;
+    padding: 12px 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.buttons button:hover {
+    background: #d4af37;
+    transform: translateY(-2px); /* Efect de "ridicare" la hover */
+}
+
+
+/* --- STILURI PENTRU ALERTE DE STARE CRITICĂ --- */
+
+.alert-message {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ff0000; /* Roșu intens */
+    background: #fff;
+    padding: 10px 20px;
+    border: 3px solid #ff0000;
+    border-radius: 8px;
+    margin: 15px 0;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    /* Animație de clipire */
+    animation: blinker 1s linear infinite; 
+}
+
+/* Definiția Animației */
+@keyframes blinker {
+    50% {
+        opacity: 0.3; /* Face textul să pară că se estompează la 50% din timp */
+    }
+}
+
+/* Game.css sau App.css */
+
+.cleaning-mode {
+    border: 3px solid #ff0000; 
+    box-shadow: 0 0 15px #ff0000;
+}
+
+.cleaning-status {
+    
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ff0000; 
+    background: #e6f7ff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    text-align: center;
+}
